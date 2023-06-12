@@ -5,6 +5,7 @@ function Filter({handleFilterChange, filter})  {
       <>
         <label>
           Enter name from contacts
+
           <input
             type="text"
             name="filter"
@@ -12,7 +13,7 @@ function Filter({handleFilterChange, filter})  {
             title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
             value={filter}
             onChange={event => {
-              handleFilterChange(event.target.value);
+              handleFilterChange(event);
             }}
             required
           />

@@ -12,7 +12,8 @@ class ContactForm extends Component {
   onFormSubmit = e => {
     e.preventDefault();
 
-    this.props.onSubmit(this.state);
+    const { name, number } = this.state;
+    this.props.onSubmit(name, number);
     this.resetForm();
   };
 
@@ -24,7 +25,11 @@ class ContactForm extends Component {
     const { name, number } = this.state;
     return (
       <>
-        <form onSubmit={this.onFormSubmit}>
+        <form
+          onSubmit={event => {
+            this.onFormSubmit(event);
+          }}
+        >
           <label>
             Enter name
             <input
