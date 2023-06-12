@@ -1,14 +1,26 @@
-import React, { Component, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { nanoid } from 'nanoid';
 
 import ContactForm from './ContactForm';
 import Filter from './Filter';
 import Contacts from './Contacts';
 
+const useLocalStorage = (key, defValue) => {
+  const [state, setState] = useState(() => {
+    return JSON.parse(localStorage.getItem(key)) ?? defValue;
+  });
+
+  useEffect(() => {
+    window.localStorage.setItem(key, JSON.stringify(state));
+  }, [state, key]);
+
+  return [state, setState];
+};
+
 function App() {
   const CONTACT_KEY = 'contacts';
 
-  const [contacts, setContacts] = useState(JSON.parse(localStorage.getItem(CONTACT_KEY)) ?? []);
+  const [contacts, setContacts] = useLocalStorage(CONTACT_KEY, []);
   const [filter, setFilter] = useState('');
 
   const handleFilter = event => {
@@ -40,9 +52,7 @@ function App() {
     );
   };
 
-  useEffect(() => {
-    window.localStorage.setItem(CONTACT_KEY, JSON.stringify(contacts));
-  }, [contacts]);
+  
 
   return (
     <>
